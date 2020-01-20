@@ -1,0 +1,83 @@
+{% extends 'students/base.html' %}
+{% block nav%}
+{% if request.user.is_staff %}
+<a class="navbar-brand" href="{% url 'students:index'  %}">NCAT SIS</a>
+{% endif %}
+{% if request.user.profile.id == profile.id %}
+<a class="navbar-brand" href="{% url 'students:detail' request.user.profile.id %}">NCAT SIS</a>
+{% endif %}
+{% endblock %}
+{% block body %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% if request.user.is_staff %}
+<div class="container">
+      <div class="row justify-content-center">
+        <div class="card">
+
+  <h5 class="card-header info-color white-text text-center py-4">
+    <strong>Student Information</strong>
+  </h5>
+
+  <!--Card content-->
+  <div class="card-body px-lg-5 pt-0">
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+  <p>Name: {{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+  <p>Role: {% if profile.role == 1 %}
+              <strong>Student</strong>
+              {% else %}<strong>Faculty</strong>
+           {% endif %}</p>
+  <p>Banner ID: {{ profile.banner_id }}</p>
+  <p>GPA: {{ profile.gpa }}</p>
+  <p>Total Credit: {{ profile.total_credit }}</p>
+  <p>Balance: {{ profile.balance }}</p>
+
+  <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit"  class="btn btn-success" name="button"><a href="{% url 'students:update' profile.id %}">Update Student</a></button>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+{% elif request.user.profile.id == profile.id %}
+<div class="container">
+      <div class="row justify-content-center">
+        <div class="card">
+
+  <h5 class="card-header info-color white-text text-center py-8">
+    <strong>Sign in</strong>
+  </h5>
+
+  <!--Card content-->
+  <div class="card-body px-lg-5 pt-0">
+  <h1>Student Information</h1>
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+  <p>Name: {{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+  <p>Role: {% if profile.role == 1 %}
+              <strong>Student</strong>
+              {% else %}<strong>Faculty</strong>
+           {% endif %}</p>
+  <p>Banner ID: {{ profile.banner_id }}</p>
+  <p>GPA: {{ profile.gpa }}</p>
+  <p>Total Credit: {{ profile.total_credit }}</p>
+  <p>Balance: {{ profile.balance }}</p>
+
+  <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit"  class="btn btn-success" name="button"><a href="{% url 'students:update' profile.id %}">Update Student</a></button>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+
+{% else %}
+<p>You are not authorized to view this page</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'students/base.html' %}
+{% block nav%}
+{% if request.user.is_staff %}
+<a class="navbar-brand" href="{% url 'students:index'  %}">NCAT SIS</a>
+{% endif %}
+{% if request.user.profile.id == profile.id %}
+<a class="navbar-brand" href="{% url 'students:detail' request.user.profile.id %}">NCAT SIS</a>
+{% endif %}
+{% endblock %}
+{% block body %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+
+
+<form class="form-horizontal" role="form" action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit"  class="btn btn-success" name="button">Submit</button>
+      </div>
+    </div>
+</form>
+{% endblock %}

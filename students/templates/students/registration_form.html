@@ -1,0 +1,30 @@
+{% extends 'students/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+<div class="container">
+      <div class="row justify-content-center">
+        <div class="card">
+
+  <h5 class="card-header info-color white-text text-center py-8">
+    <strong>Register</strong>
+  </h5>
+
+  <!--Card content-->
+  <div class="card-body px-lg-5 pt-0">
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit"  class="btn btn-success" name="button">Register</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  </div>
+</div>
+</div>
+{% endblock %}

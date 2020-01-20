@@ -1,0 +1,49 @@
+{% extends 'students/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block nav%}
+{% if request.user.is_staff %}
+<a class="navbar-brand" href="{% url 'students:index'  %}">NCAT SIS</a>
+{% endif %}
+{% if request.user.profile.id == profile.id %}
+<a class="navbar-brand" href="{% url 'students:detail' request.user.profile.id %}">NCAT SIS</a>
+{% endif %}
+{% endblock %}
+{% block body %}
+<div class="container">
+      <div class="row justify-content-center">
+        <div class="card">
+
+  <h5 class="card-header info-color white-text text-center py-8">
+    <strong>Update Profile</strong>
+  </h5>
+
+  <!--Card content-->
+  <div class="card-body px-lg-5 pt-0">
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.user|as_crispy_field }}
+      {% if request.user.is_staff %}
+      {{ form.role|as_crispy_field }}
+      {% endif %}
+      {{ form.banner_id|as_crispy_field }}
+      {% if request.user.is_staff %}
+      {{ form.gpa|as_crispy_field }}
+      {% endif %}
+      {{ form.total_credit|as_crispy_field }}
+      {% if request.user.is_staff %}
+      {{ form.balance|as_crispy_field }}
+      {% endif %}
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit"  class="btn btn-success" name="button">Update</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  </div>
+</div>
+</div>
+{% endblock %}
